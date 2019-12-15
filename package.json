@@ -1,0 +1,45 @@
+{
+  "name": "xbm-editor",
+  "productName": "XBM Editor",
+  "version": "1.0.0",
+  "description": "An editor for monochrome XBM images intended to be displayed on tiny OLED screens.",
+  "main": "bundle/main.js",
+  "repository": "https://github.com/troeggla/xbm-editor",
+  "author": "Thomas Röggla",
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "start": "electron bundle/main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder && cd dist/mac && tar cvf XBMEdtiro.tar XBMEdtiro.app/ && gzip XBMEdtiro.tar"
+  },
+  "build": {
+    "appId": "com.lichtfragmente.xbm-editor",
+    "mac": {
+      "target": "dir"
+    },
+    "win": {
+      "target": "portable"
+    }
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.9",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "classnames": "^2.2.6",
+    "css-loader": "^2.1.1",
+    "electron": "^6.0.6",
+    "electron-builder": "^21.2.0",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.19.0",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.7.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7"
+  },
+  "dependencies": {
+    "bulma": "^0.8.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  }
+}

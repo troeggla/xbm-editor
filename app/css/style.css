@@ -1,0 +1,26 @@
+:root {
+  --titlebar-height: 24px;
+}
+
+html, body {
+  background-color: #FAFAFA;
+  color: #737373;
+  font-family: Helvetica, Arial, sans-serif;
+
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#titlebar {
+  width: 100%;
+  height: var(--titlebar-height);
+  background-color: #008577;
+  -webkit-app-region: drag;
+}
+
+#react {
+  overflow: auto;
+  height: calc(100vh - var(--titlebar-height))
+}
+

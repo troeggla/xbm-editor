@@ -1,0 +1,6 @@
+node_modules/
+dist/
+bundle/
+.DS_Store
+*.swp
+*.log

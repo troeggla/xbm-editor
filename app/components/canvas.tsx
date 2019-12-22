@@ -40,6 +40,14 @@ function getPathPoints(linePoints: Array<Point>): Array<Point> {
   return pathPoints;
 }
 
+function allPointsEqual(points: Array<Point>) {
+  const firstPoint = points[0];
+
+  return points.slice(1).reduce((eq, [x, y]) => {
+    return eq && firstPoint[0] === x && firstPoint[1] === y;
+  }, true);
+}
+
 interface CanvasProps {
   grid: boolean[][];
   cellSize: number;

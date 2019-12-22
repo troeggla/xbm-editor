@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import Canvas from "./canvas";
 
-function initMatrix(dimensions: [number, number]): boolean[][] {
+function initGrid(dimensions: [number, number]): boolean[][] {
   const [width, height] = dimensions;
   const matrix: boolean[][] = [];
 
@@ -20,12 +20,12 @@ function initMatrix(dimensions: [number, number]): boolean[][] {
 
 const App: React.FC = () => {
   const [dimensions, setDimensions] = useState<[number, number]>([32, 32]);
-  const [grid, setGrid] = useState<boolean[][]>(initMatrix(dimensions));
+  const [grid, setGrid] = useState<boolean[][]>(initGrid(dimensions));
   const [cellSize, setCellSize] = useState<number>(15);
 
   const updateDimensions = (dimensions: [number, number]) => {
     setDimensions(dimensions);
-    setGrid(initMatrix(dimensions));
+    setGrid(initGrid(dimensions));
   };
 
   return (

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 
-import Pixel from "./pixel";
 import Canvas from "./canvas";
 
 function initMatrix(dimensions: [number, number]): boolean[][] {
@@ -22,16 +21,6 @@ function initMatrix(dimensions: [number, number]): boolean[][] {
 const App: React.FC = () => {
   const [dimensions, setDimensions] = useState<[number, number]>([32, 32]);
   const [grid, setGrid] = useState<boolean[][]>(initMatrix(dimensions));
-
-  const togglePixel = (x: number, y: number) => {
-    const tmpGrid = grid.slice();
-    tmpGrid[x][y] = !tmpGrid[x][y];
-
-    setGrid(tmpGrid);
-  };
-
-  const [width, height] = dimensions;
-  const gridTemplate = `repeat(${height}, 10px) / repeat(${width}, 10px)`;
 
   return (
     <div id="app">

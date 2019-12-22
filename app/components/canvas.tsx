@@ -128,6 +128,19 @@ const Canvas: React.FC<CanvasProps> = (props) => {
         ];
       });
 
+      if (allPointsEqual(activeCells)) {
+        const [cellX, cellY] = linePoints.map(([x, y]) => [
+          Math.floor(x / cellSize),
+          Math.floor(y / cellSize)
+        ])[0];
+
+        const newGrid = grid.slice();
+        newGrid[cellX][cellY] = !newGrid[cellX][cellY];
+
+        onGridUpdated(newGrid);
+        return;
+      }
+
       onGridUpdated(
         activeCells.reduce((grid, cell) => {
           const [x, y] = cell;

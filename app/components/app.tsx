@@ -55,14 +55,14 @@ const App: React.FC = () => {
       <input
         type="number"
         value={dimensions[0]}
-        min={0}
+        min={1}
         max={128}
         onChange={(e) => updateDimensions([e.target.valueAsNumber, dimensions[1]])}
       />
       <input
         type="number"
         value={dimensions[1]}
-        min={0}
+        min={1}
         max={32}
         onChange={(e) => updateDimensions([dimensions[0], e.target.valueAsNumber])}
       />

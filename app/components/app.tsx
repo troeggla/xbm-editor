@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import Canvas from "./canvas";
 
-function initGrid(dimensions: [number, number]): boolean[][] {
+function initGrid(dimensions: [number, number], initialData: boolean[][] = []): boolean[][] {
   const [width, height] = dimensions;
   const matrix: boolean[][] = [];
 
@@ -12,6 +12,17 @@ function initGrid(dimensions: [number, number]): boolean[][] {
 
     for (let y = 0; y < height; y++) {
       matrix[x][y] = false;
+    }
+  }
+
+  if (initialData.length > 0) {
+    const copyWidth = Math.min(width, initialData.length);
+    const copyHeight = Math.min(height, initialData[0].length);
+
+    for (let x = 0; x < copyWidth; x++) {
+      for (let y = 0; y < copyHeight; y++) {
+        matrix[x][y] = initialData[x][y];
+      }
     }
   }
 
@@ -25,7 +36,7 @@ const App: React.FC = () => {
 
   const updateDimensions = (dimensions: [number, number]) => {
     setDimensions(dimensions);
-    setGrid(initGrid(dimensions));
+    setGrid(initGrid(dimensions, grid));
   };
 
   return (

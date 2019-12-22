@@ -41,10 +41,11 @@ function getPathPoints(linePoints: Array<Point>): Array<Point> {
 interface CanvasProps {
   grid: boolean[][];
   cellSize: number;
+  onGridUpdated: (newGrid: boolean[][]) => void;
 }
 
 const Canvas: React.FC<CanvasProps> = (props) => {
-  const { grid , cellSize } = props;
+  const { grid , cellSize, onGridUpdated } = props;
   const [width, height] = [grid.length * cellSize, grid[0].length * cellSize];
 
   const canvasRef = useRef<HTMLCanvasElement>(null);

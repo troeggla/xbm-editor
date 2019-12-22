@@ -24,7 +24,11 @@ const App: React.FC = () => {
 
   return (
     <div id="app">
-      <Canvas grid={grid} cellSize={15} />
+      <Canvas
+        grid={grid}
+        cellSize={15}
+        onGridUpdated={setGrid}
+      />
     </div>
   );
 };

@@ -1,7 +1,9 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
 
-function getCanvasPosition(canvas: HTMLCanvasElement, mouseEvent: MouseEvent): [number, number] {
+type Point = [number, number];
+
+function getCanvasPosition(canvas: HTMLCanvasElement, mouseEvent: MouseEvent): Point {
   const { top, left } = canvas.getBoundingClientRect();
 
   return [
@@ -58,11 +60,11 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     });
 
     let mouseDown = false;
-    let lastPos: [number, number];
+    let linePoints: Array<Point>;
 
     canvas.onmousedown = (e) => {
       mouseDown = true;
-      lastPos = getCanvasPosition(canvas, e);
+      linePoints = [getCanvasPosition(canvas, e)];
     };
 
     canvas.onmousemove = (e) => {
@@ -70,9 +72,9 @@ const Canvas: React.FC<CanvasProps> = (props) => {
         ctx.beginPath();
         ctx.strokeStyle = "#008577";
 
-        ctx.moveTo(...lastPos);
-        lastPos = getCanvasPosition(canvas, e);
-        ctx.lineTo(...lastPos);
+        ctx.moveTo(...linePoints[linePoints.length - 1]);
+        linePoints.push(getCanvasPosition(canvas, e));
+        ctx.lineTo(...linePoints[linePoints.length - 1]);
 
         ctx.stroke();
       }
@@ -80,6 +82,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
 
     canvas.onmouseup = () => {
       mouseDown = false;
+      linePoints = [];
     };
   }, [grid]);
 

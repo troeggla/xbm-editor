@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 
 import Pixel from "./pixel";
+import Canvas from "./canvas";
 
 function initMatrix(dimensions: [number, number]): boolean[][] {
   const [width, height] = dimensions;
@@ -34,19 +35,7 @@ const App: React.FC = () => {
 
   return (
     <div id="app">
-      <div style={{ display: "grid", gridTemplate }}>
-        {grid.map((col, x) => {
-          return col.map((filled, y) => {
-            return (
-              <Pixel
-                key={`${x}.${y}`}
-                filled={filled}
-                onUpdate={togglePixel.bind(null, x, y)}
-              />
-            );
-          });
-        })}
-      </div>
+      <Canvas grid={grid} cellSize={15} />
     </div>
   );
 };

@@ -12,6 +12,32 @@ function getCanvasPosition(canvas: HTMLCanvasElement, mouseEvent: MouseEvent): P
   ];
 }
 
+function getPathPoints(linePoints: Array<Point>): Array<Point> {
+  const pathPoints: Array<Point> = [];
+
+  for (let i = 0; i < linePoints.length - 1; i++) {
+    const [ x1, y1 ] = linePoints[i];
+    const [ x2, y2 ] = linePoints[i + 1];
+
+    if (x2 - x1 === 0) {
+      pathPoints.push([x1, y1]);
+      pathPoints.push([x2, y2]);
+
+      continue;
+    }
+
+    const m = (y2 - y1) / (x2 - x1);
+    const b = y1 - (m * x1);
+
+    for (let x = x1; x <= x2; x++) {
+      const y = m * x + b;
+      pathPoints.push([x, y]);
+    }
+  }
+
+  return pathPoints;
+}
+
 interface CanvasProps {
   grid: boolean[][];
   cellSize: number;

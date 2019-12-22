@@ -109,6 +109,24 @@ const Canvas: React.FC<CanvasProps> = (props) => {
 
     canvas.onmouseup = () => {
       mouseDown = false;
+
+      const pathPoints = getPathPoints(linePoints);
+      const activeCells = pathPoints.map<Point>(([x, y]) => {
+        return [
+          Math.floor(x / cellSize),
+          Math.floor(y / cellSize)
+        ];
+      });
+
+      onGridUpdated(
+        activeCells.reduce((grid, cell) => {
+          const [x, y] = cell;
+          grid[x][y] = true;
+
+          return grid;
+        }, grid.slice())
+      );
+
       linePoints = [];
     };
   }, [grid]);

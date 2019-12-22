@@ -152,7 +152,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
 
       linePoints = [];
     };
-  }, [grid]);
+  }, [grid, cellSize]);
 
   return (
     <canvas

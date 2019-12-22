@@ -21,12 +21,21 @@ function initMatrix(dimensions: [number, number]): boolean[][] {
 const App: React.FC = () => {
   const [dimensions, setDimensions] = useState<[number, number]>([32, 32]);
   const [grid, setGrid] = useState<boolean[][]>(initMatrix(dimensions));
+  const [cellSize, setCellSize] = useState<number>(15);
 
   return (
     <div id="app">
+      Cell size:&emsp;
+      <input
+        type="number"
+        value={cellSize}
+        min={0}
+        onChange={(e) => setCellSize(e.target.valueAsNumber)}
+      />
+      <br />
       <Canvas
         grid={grid}
-        cellSize={15}
+        cellSize={cellSize}
         onGridUpdated={setGrid}
       />
     </div>

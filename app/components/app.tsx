@@ -36,7 +36,7 @@ function initGrid(dimensions: [number, number], initialData: boolean[][] = []): 
 const App: React.FC = () => {
   const [dimensions, setDimensions] = useState<[number, number]>([32, 32]);
   const [grid, setGrid] = useState<boolean[][]>(initGrid(dimensions));
-  const [cellSize, setCellSize] = useState<number>(15);
+  const [cellSize, setCellSize] = useState<number>(20);
 
   useEffect(() => {
     ipcRenderer.on("save-file-reply", (_, success: boolean) => {

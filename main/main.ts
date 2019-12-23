@@ -12,8 +12,8 @@ let mainWindow: BrowserWindow | null;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 780,
+    width: 800,
+    height: 800,
     title: app.getName(),
     titleBarStyle: "hidden",
     icon: __dirname + "/icon.icns",

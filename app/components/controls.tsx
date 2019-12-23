@@ -9,10 +9,11 @@ interface ControlsProps {
 
   onCellSizeUpdated: (cellSize: number) => void;
   onDimensionsUpdated: (dimensions: [number, number]) => void;
+  onGenerateClicked: () => void;
 }
 
 const Controls: React.FC<ControlsProps> = (props) => {
-  const { cellSize, dimensions, onCellSizeUpdated, onDimensionsUpdated } = props;
+  const { cellSize, dimensions, onCellSizeUpdated, onDimensionsUpdated, onGenerateClicked } = props;
 
   return (
     <div className="controls">
@@ -42,6 +43,12 @@ const Controls: React.FC<ControlsProps> = (props) => {
           max={MAX_SCREEN_HEIGHT}
           onChange={(e) => onDimensionsUpdated([dimensions[0], e.target.valueAsNumber])}
         />
+      </div>
+
+      <div>
+        <button onClick={onGenerateClicked}>
+          Generate
+        </button>
       </div>
     </div>
   );

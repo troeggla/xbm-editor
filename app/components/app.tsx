@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ipcRenderer } from "electron";
 
 import { generateXBM } from "../generate_xbm";
@@ -37,6 +37,16 @@ const App: React.FC = () => {
   const [dimensions, setDimensions] = useState<[number, number]>([32, 32]);
   const [grid, setGrid] = useState<boolean[][]>(initGrid(dimensions));
   const [cellSize, setCellSize] = useState<number>(15);
+
+  useEffect(() => {
+    ipcRenderer.on("save-file-reply", (_, success: boolean) => {
+      if (success) {
+        alert("File saved successfully!");
+      } else {
+        alert("Could not save file!");
+      }
+    });
+  }, []);
 
   const updateDimensions = (dimensions: [number, number]) => {
     setDimensions(dimensions);

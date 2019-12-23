@@ -23,13 +23,3 @@ html, body {
   overflow: auto;
   height: calc(100vh - var(--titlebar-height))
 }
-
-.pixel {
-  border: 1px solid #747474;
-  box-sizing: border-box;
-  display: inline;
-}
-
-.filled {
-  background-color: #008577;
-}

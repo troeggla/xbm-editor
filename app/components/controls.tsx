@@ -26,12 +26,20 @@ interface ControlsProps {
 
   onCellSizeUpdated: (cellSize: number) => void;
   onDimensionsUpdated: (dimensions: [number, number]) => void;
-  onGenerateClicked: () => void;
+  onGenerateClicked: (filename: string) => void;
   onClearClicked: () => void;
 }
 
 const Controls: React.FC<ControlsProps> = (props) => {
   const { cellSize, dimensions, onCellSizeUpdated, onDimensionsUpdated, onGenerateClicked, onClearClicked } = props;
+
+  const selectFilename = async () => {
+    const filename = await getFilename();
+
+    if (filename) {
+      onGenerateClicked(filename);
+    }
+  };
 
   return (
     <div className="controls">
@@ -70,7 +78,7 @@ const Controls: React.FC<ControlsProps> = (props) => {
       </div>
 
       <div>
-        <button onClick={onGenerateClicked}>
+        <button onClick={selectFilename}>
           Generate
         </button>
       </div>

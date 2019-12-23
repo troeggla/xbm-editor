@@ -3,6 +3,9 @@ import { useState } from "react";
 
 import Canvas from "./canvas";
 
+const MAX_SCREEN_HEIGHT = 32;
+const MAX_SCREEN_WIDTH = 128;
+
 function initGrid(dimensions: [number, number], initialData: boolean[][] = []): boolean[][] {
   const [width, height] = dimensions;
   const matrix: boolean[][] = [];
@@ -56,14 +59,14 @@ const App: React.FC = () => {
         type="number"
         value={dimensions[0]}
         min={1}
-        max={128}
+        max={MAX_SCREEN_WIDTH}
         onChange={(e) => updateDimensions([e.target.valueAsNumber, dimensions[1]])}
       />
       <input
         type="number"
         value={dimensions[1]}
         min={1}
-        max={32}
+        max={MAX_SCREEN_HEIGHT}
         onChange={(e) => updateDimensions([dimensions[0], e.target.valueAsNumber])}
       />
 

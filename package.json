@@ -10,7 +10,7 @@
   "scripts": {
     "start": "electron bundle/main.js",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder && cd dist/mac && tar cvf XBMEdtiro.tar XBMEdtiro.app/ && gzip XBMEdtiro.tar"
+    "dist": "electron-builder && cd dist/mac && tar cvf XBMEditor.tar XBM\\ Editor.app/ && gzip XBMEditor.tar"
   },
   "build": {
     "appId": "com.lichtfragmente.xbm-editor",

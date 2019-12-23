@@ -3,6 +3,8 @@ import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from "electron";
 import * as path from "path";
 import * as url from "url";
 
+import { setupHandlers } from "./ipc_handlers";
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | null;
@@ -72,6 +74,8 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  setupHandlers();
 }
 
 // This method will be called when Electron has finished

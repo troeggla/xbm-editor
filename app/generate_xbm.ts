@@ -1,5 +1,18 @@
-function flatten<T>(grid: T[][]): Array<T> {
-  return grid.reduce((acc, col) => acc.concat(col), []);
+function flatten(grid: boolean[][]): Array<boolean> {
+  const flattenedGrid: Array<boolean> = [];
+
+  for (let x = 0; x < grid.length; x++) {
+    for (let y = 0; y < grid[x].length; y++) {
+      flattenedGrid.push(grid[y][x]);
+    }
+
+    const remainder = grid[x].length % 8;
+    for (let i = 0; i < 8 - remainder; i++) {
+      flattenedGrid.push(false);
+    }
+  }
+
+  return flattenedGrid;
 }
 
 function toHex(byte: number) {
@@ -13,14 +26,6 @@ export function generateXBM(name: string, grid: boolean[][]): string {
 
   const flatGrid = flatten(grid);
   const byteArray = [];
-
-  if (flatGrid.length % 8 > 0) {
-    const padding = new Array(flatGrid.length % 8).fill(false);
-
-    flatGrid.push(
-      ...padding
-    );
-  }
 
   for (let i = 0; i < flatGrid.length; i += 8) {
     byteArray.push(

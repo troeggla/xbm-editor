@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useState } from "react";
 
+import { generateXBM } from "../generate_xbm";
+
 import Canvas from "./canvas";
 import Controls from "./controls";
 
@@ -40,6 +42,10 @@ const App: React.FC = () => {
     setGrid(initGrid(dimensions, grid));
   };
 
+  const generateOutputFile = () => {
+    console.log(generateXBM("potato", grid));
+  };
+
   return (
     <div id="app">
       <Controls
@@ -47,6 +53,7 @@ const App: React.FC = () => {
         dimensions={dimensions}
         onCellSizeUpdated={setCellSize}
         onDimensionsUpdated={updateDimensions}
+        onGenerateClicked={generateOutputFile}
       />
       <Canvas
         grid={grid}

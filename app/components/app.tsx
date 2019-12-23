@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import { ipcRenderer } from "electron";
 
 import { generateXBM } from "../generate_xbm";
 
@@ -42,8 +43,12 @@ const App: React.FC = () => {
     setGrid(initGrid(dimensions, grid));
   };
 
-  const generateOutputFile = () => {
-    console.log(generateXBM("potato", grid));
+  const generateOutputFile = (filename: string) => {
+    ipcRenderer.send(
+      "save-file",
+      filename,
+      generateXBM(filename, grid)
+    );
   };
 
   return (

@@ -155,12 +155,14 @@ const Canvas: React.FC<CanvasProps> = (props) => {
   }, [grid, cellSize]);
 
   return (
-    <canvas
-      style={{ border: "1px solid #E2E2E2" }}
-      width={width}
-      height={height}
-      ref={canvasRef}
-    />
+    <div className="canvas">
+      <canvas
+        style={{ border: "1px solid #E2E2E2" }}
+        width={width}
+        height={height}
+        ref={canvasRef}
+      />
+    </div>
   );
 };
 

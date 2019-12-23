@@ -1,7 +1,24 @@
 import * as React from "react";
+import { remote, SaveDialogOptions } from "electron";
+import { homedir } from "os";
 
 const MAX_SCREEN_HEIGHT = 32;
 const MAX_SCREEN_WIDTH = 128;
+
+async function getFilename() {
+  const dialogOptions: SaveDialogOptions = {
+    title: "Save data as",
+    defaultPath: homedir() + "/image.xbm",
+    buttonLabel: "Choose"
+  };
+
+  const result = await remote.dialog.showSaveDialog(
+    remote.getCurrentWindow(),
+    dialogOptions
+  );
+
+  return result.filePath;
+}
 
 interface ControlsProps {
   cellSize: number;

@@ -1,10 +1,20 @@
 import { ipcMain } from "electron";
+import { writeFile } from "fs";
 
 export function setupHandlers() {
-  ipcMain.on("save-file", (e, filename: string, content: string) => {
-    console.log("filename:", filename);
-    console.log(content);
+  ipcMain.on("save-file", (e, path: string, content: string) => {
+    console.log("path:", path);
 
-    e.reply("save-file-reply", true);
+    writeFile(path, content, (err) => {
+      if (err) {
+        console.error(err);
+        e.reply("save-file-reply", false);
+
+        return;
+      }
+
+      console.log("write successful");
+      e.reply("save-file-reply", true);
+    });
   });
 }

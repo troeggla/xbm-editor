@@ -2,9 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 
 import Canvas from "./canvas";
-
-const MAX_SCREEN_HEIGHT = 32;
-const MAX_SCREEN_WIDTH = 128;
+import Controls from "./controls";
 
 function initGrid(dimensions: [number, number], initialData: boolean[][] = []): boolean[][] {
   const [width, height] = dimensions;
@@ -44,35 +42,12 @@ const App: React.FC = () => {
 
   return (
     <div id="app">
-      Cell size:&emsp;
-      <input
-        type="number"
-        value={cellSize}
-        min={0}
-        onChange={(e) => setCellSize(e.target.valueAsNumber)}
+      <Controls
+        cellSize={cellSize}
+        dimensions={dimensions}
+        onCellSizeUpdated={setCellSize}
+        onDimensionsUpdated={updateDimensions}
       />
-
-      <br />
-
-      Dimensions:&emsp;
-      <input
-        type="number"
-        value={dimensions[0]}
-        min={1}
-        max={MAX_SCREEN_WIDTH}
-        onChange={(e) => updateDimensions([e.target.valueAsNumber, dimensions[1]])}
-      />
-      <input
-        type="number"
-        value={dimensions[1]}
-        min={1}
-        max={MAX_SCREEN_HEIGHT}
-        onChange={(e) => updateDimensions([dimensions[0], e.target.valueAsNumber])}
-      />
-
-      <br />
-      <br />
-
       <Canvas
         grid={grid}
         cellSize={cellSize}

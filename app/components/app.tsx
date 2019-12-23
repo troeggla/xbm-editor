@@ -54,6 +54,7 @@ const App: React.FC = () => {
         onCellSizeUpdated={setCellSize}
         onDimensionsUpdated={updateDimensions}
         onGenerateClicked={generateOutputFile}
+        onClearClicked={() => setGrid(initGrid(dimensions))}
       />
       <Canvas
         grid={grid}

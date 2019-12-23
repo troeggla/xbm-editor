@@ -14,6 +14,14 @@ export function generateXBM(name: string, grid: boolean[][]): string {
   const flatGrid = flatten(grid);
   const byteArray = [];
 
+  if (flatGrid.length % 8 > 0) {
+    const padding = new Array(flatGrid.length % 8).fill(false);
+
+    flatGrid.push(
+      ...padding
+    );
+  }
+
   for (let i = 0; i < flatGrid.length; i += 8) {
     byteArray.push(
       (+flatGrid[i + 0] << 0) |

@@ -8,13 +8,9 @@ export function setupHandlers() {
     writeFile(path, content, (err) => {
       if (err) {
         console.error(err);
-        e.reply("save-file-reply", false);
-
-        return;
       }
 
-      console.log("write successful");
-      e.reply("save-file-reply", true);
+      e.reply("save-file-reply", err);
     });
   });
 }

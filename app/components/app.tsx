@@ -39,12 +39,13 @@ const App: React.FC = () => {
   const [cellSize, setCellSize] = useState<number>(20);
 
   useEffect(() => {
-    ipcRenderer.on("save-file-reply", (_, success: boolean) => {
-      if (success) {
-        alert("File saved successfully!");
-      } else {
-        alert("Could not save file!");
+    ipcRenderer.on("save-file-reply", (_, err: NodeJS.ErrnoException | null) => {
+      if (err) {
+        alert("Could not save file: " + err.message);
+        return;
       }
+
+      alert("File saved successfully!");
     });
   }, []);
 

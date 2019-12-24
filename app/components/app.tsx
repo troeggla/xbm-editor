@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { ipcRenderer } from "electron";
+import { basename } from "path";
 
 import { generateXBM } from "../generate_xbm";
 
@@ -54,11 +55,13 @@ const App: React.FC = () => {
     setGrid(initGrid(dimensions, grid));
   };
 
-  const generateOutputFile = (filename: string) => {
+  const generateOutputFile = (path: string) => {
+    const name = basename(path).split(".")[0];
+
     ipcRenderer.send(
       "save-file",
-      filename,
-      generateXBM(filename, grid)
+      path,
+      generateXBM(name, grid)
     );
   };
 

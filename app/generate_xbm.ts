@@ -40,14 +40,14 @@ export function generateXBM(name: string, grid: boolean[][]): string {
     );
   }
 
-  return `
-    #include <Arduino.h>
-
-    #define ${name}_width ${width}
-    #define ${name}_height ${height}
-
-    const PROGMEM uint8_t ${name}_bits[] = {
-      ${byteArray.map((byte) => toHex(byte)).join(", ")}
-    };
-  `;
+  return (
+    `#include <Arduino.h>\n` +
+    `\n` +
+    `#define ${name}_width ${width}\n` +
+    `#define ${name}_height ${height}\n` +
+    `\n` +
+    `const PROGMEM uint8_t ${name}_bits[] = {\n` +
+    `  ${byteArray.map((byte) => toHex(byte)).join(", ")}\n` +
+    `};\n`
+  );
 }

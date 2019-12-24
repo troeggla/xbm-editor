@@ -7,8 +7,11 @@ function flatten(grid: boolean[][]): Array<boolean> {
     }
 
     const remainder = grid[x].length % 8;
-    for (let i = 0; i < 8 - remainder; i++) {
-      flattenedGrid.push(false);
+
+    if (remainder > 0) {
+      for (let i = 0; i < 8 - remainder; i++) {
+        flattenedGrid.push(false);
+      }
     }
   }
 

@@ -79,7 +79,7 @@ const Controls: React.FC<ControlsProps> = (props) => {
 
       <div>
         <button onClick={selectFilename}>
-          Generate
+          Export
         </button>
       </div>
     </div>

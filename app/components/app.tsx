@@ -42,11 +42,11 @@ const App: React.FC = () => {
   useEffect(() => {
     ipcRenderer.on("save-file-reply", (_, err: NodeJS.ErrnoException | null) => {
       if (err) {
-        alert("Could not save file: " + err.message);
+        alert("Could not export file: " + err.message);
         return;
       }
 
-      alert("File saved successfully!");
+      alert("File exported successfully!");
     });
   }, []);
 

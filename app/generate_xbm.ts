@@ -23,12 +23,23 @@ function toHex(byte: number) {
   return (hexStr.length === 1) ? `0x0${hexStr}` : `0x${hexStr}`;
 }
 
+function formatBytes(bytes: Array<number>): string {
+  let formattedBytes = "";
+
+  for (let i = 0; i < bytes.length; i += 12) {
+    const slice = bytes.slice(i, i + 12);
+    formattedBytes += "  " + slice.map(toHex).join(", ") + ",\n";
+  }
+
+  return formattedBytes;
+}
+
 export function generateXBM(name: string, grid: boolean[][]): string {
   const width = grid.length;
   const height = grid[0].length;
 
   const flatGrid = flatten(grid);
-  const byteArray = [];
+  const byteArray: Array<number> = [];
 
   for (let i = 0; i < flatGrid.length; i += 8) {
     byteArray.push(
@@ -50,7 +61,7 @@ export function generateXBM(name: string, grid: boolean[][]): string {
     `#define ${name}_height ${height}\n` +
     `\n` +
     `const PROGMEM uint8_t ${name}_bits[] = {\n` +
-    `  ${byteArray.map((byte) => toHex(byte)).join(", ")}\n` +
+    formatBytes(byteArray) +
     `};\n`
   );
 }

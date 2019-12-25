@@ -1,4 +1,6 @@
 from __future__ import print_function
+
+import math
 import re
 import sys
 
@@ -12,8 +14,12 @@ def get_width(xbm):
     regex = re.compile(".*_width ([0-9]+).*", re.DOTALL)
     match = regex.match(xbm)
 
-    return int(match.group(1))
+    width = int(match.group(1))
 
+    if width % 8 == 0:
+        return width
+    else:
+        return math.ceil(width / 8) * 8
 
 def get_data(xbm):
     regex = re.compile(".*\{(.+)\}.*", re.DOTALL)

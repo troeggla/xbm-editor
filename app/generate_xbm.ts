@@ -1,12 +1,11 @@
 function flatten(grid: boolean[][]): Array<boolean> {
   const flattenedGrid: Array<boolean> = [];
+  const remainder = grid.length % 8;
 
-  for (let x = 0; x < grid.length; x++) {
-    for (let y = 0; y < grid[x].length; y++) {
-      flattenedGrid.push(grid[y][x]);
+  for (let y = 0; y < grid[0].length; y++) {
+    for (let x = 0; x < grid.length; x++) {
+      flattenedGrid.push(grid[x][y]);
     }
-
-    const remainder = grid[x].length % 8;
 
     if (remainder > 0) {
       for (let i = 0; i < 8 - remainder; i++) {

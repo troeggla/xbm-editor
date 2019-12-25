@@ -47,6 +47,7 @@ const Controls: React.FC<ControlsProps> = (props) => {
         Cell size:&emsp;
         <input
           type="number"
+          className="input is-small number-input"
           value={cellSize}
           min={0}
           onChange={(e) => onCellSizeUpdated(e.target.valueAsNumber)}
@@ -57,13 +58,16 @@ const Controls: React.FC<ControlsProps> = (props) => {
         Dimensions:&emsp;
         <input
           type="number"
+          className="input is-small number-input"
           value={dimensions[0]}
           min={1}
           max={MAX_SCREEN_WIDTH}
           onChange={(e) => onDimensionsUpdated([e.target.valueAsNumber, dimensions[1]])}
         />
+        &times;
         <input
           type="number"
+          className="input is-small number-input"
           value={dimensions[1]}
           min={1}
           max={MAX_SCREEN_HEIGHT}
@@ -72,13 +76,13 @@ const Controls: React.FC<ControlsProps> = (props) => {
       </div>
 
       <div>
-        <button onClick={onClearClicked}>
+        <button className="button is-small" onClick={onClearClicked}>
           Clear
         </button>
       </div>
 
       <div>
-        <button onClick={selectFilename}>
+        <button className="button is-small" onClick={selectFilename}>
           Export
         </button>
       </div>

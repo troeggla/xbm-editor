@@ -44,3 +44,12 @@ html, body {
 
   height: calc(100vh - var(--titlebar-height) - var(--controls-height));
 }
+
+.number-input {
+  width: 64px;
+  margin: 0 5px;
+}
+
+.input-label {
+  height: 30px;
+}

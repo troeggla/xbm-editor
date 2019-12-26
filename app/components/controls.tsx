@@ -44,7 +44,7 @@ const Controls: React.FC<ControlsProps> = (props) => {
   return (
     <div className="controls">
       <div>
-        Cell size:&emsp;
+        <label className="input-label">Cell size:</label>
         <input
           type="number"
           className="input is-small number-input"
@@ -55,7 +55,7 @@ const Controls: React.FC<ControlsProps> = (props) => {
       </div>
 
       <div>
-        Dimensions:&emsp;
+        <label className="input-label">Dimensions:</label>
         <input
           type="number"
           className="input is-small number-input"

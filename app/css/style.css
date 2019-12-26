@@ -51,5 +51,6 @@ html, body {
 }
 
 .input-label {
-  height: 30px;
+  line-height: 2;
+  margin-right: 5px;
 }

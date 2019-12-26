@@ -76,12 +76,9 @@ const Controls: React.FC<ControlsProps> = (props) => {
       </div>
 
       <div>
-        <button className="button is-small" onClick={onClearClicked}>
+        <button className="button is-small"  style={{ marginRight: 10 }} onClick={onClearClicked}>
           Clear
         </button>
-      </div>
-
-      <div>
         <button className="button is-small" onClick={selectFilename}>
           Export
         </button>

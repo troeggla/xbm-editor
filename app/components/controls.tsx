@@ -49,7 +49,7 @@ const Controls: React.FC<ControlsProps> = (props) => {
           type="number"
           className="input is-small number-input"
           value={cellSize}
-          min={0}
+          min={1}
           onChange={(e) => onCellSizeUpdated(e.target.valueAsNumber)}
         />
       </div>

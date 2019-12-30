@@ -1,4 +1,5 @@
 import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from "electron";
+import { ipcMain as ipc } from "electron-better-ipc";
 
 import * as path from "path";
 import * as url from "url";
@@ -8,6 +9,10 @@ import { setupHandlers } from "./ipc_handlers";
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | null;
+
+function launchMenuAction(itemId: string) {
+  ipc.callRenderer(mainWindow!, "menu-item-clicked", itemId);
+}
 
 function createWindow() {
   // Create the browser window.
@@ -35,16 +40,21 @@ function createWindow() {
   let menuTemplate: Array<MenuItemConstructorOptions> = [{
     label: "View",
     submenu: [
-      {role: "reload"},
-      {role: "forcereload"},
-      {role: "toggledevtools"},
-      {type: "separator"},
-      {role: "resetzoom"},
-      {role: "zoomin"},
-      {role: "zoomout"},
-      {type: "separator"},
-      {role: "togglefullscreen"}
+      { role: "reload" },
+      { role: "forcereload" },
+      { role: "toggledevtools" },
+      { type: "separator" },
+      { role: "resetzoom" },
+      { role: "zoomin" },
+      { role: "zoomout" },
+      { type: "separator" },
+      { role: "togglefullscreen" }
     ] as Array<MenuItemConstructorOptions>
+  }, {
+    label: "Edit",
+    submenu: [
+      { click: launchMenuAction.bind(null, "invert"), label: "Invert" }
+    ]
   }];
 
   if (process.platform === "darwin") {

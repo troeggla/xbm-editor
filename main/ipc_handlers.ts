@@ -1,16 +1,26 @@
-import { ipcMain } from "electron";
+import { ipcMain as ipc } from "electron-better-ipc";
 import { writeFile } from "fs";
 
-export function setupHandlers() {
-  ipcMain.on("save-file", (e, path: string, content: string) => {
-    console.log("path:", path);
-
+function writeFilePromise(path: string, content: string) {
+  return new Promise((resolve, reject) => {
     writeFile(path, content, (err) => {
       if (err) {
-        console.error(err);
+        reject(err);
+      } else {
+        resolve();
       }
-
-      e.reply("save-file-reply", err);
     });
+  });
+}
+
+export function setupHandlers() {
+  ipc.answerRenderer("save-file", async ([ path, content ]: Array<string>) => {
+    console.log("path:", path);
+
+    try {
+      await writeFilePromise(path, content);
+    } catch (err) {
+      return err;
+    }
   });
 }

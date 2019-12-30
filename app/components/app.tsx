@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ipcRenderer } from "electron";
 import { basename } from "path";
+import { ipcRenderer as ipc } from "electron-better-ipc";
 
 import { generateXBM } from "../generate_xbm";
 
@@ -40,14 +40,6 @@ const App: React.FC = () => {
   const [cellSize, setCellSize] = useState<number>(20);
 
   useEffect(() => {
-    ipcRenderer.on("save-file-reply", (_, err: NodeJS.ErrnoException | null) => {
-      if (err) {
-        alert("Could not export file: " + err.message);
-        return;
-      }
-
-      alert("File exported successfully!");
-    });
   }, []);
 
   const updateDimensions = (dimensions: [number, number]) => {
@@ -55,14 +47,20 @@ const App: React.FC = () => {
     setGrid(initGrid(dimensions, grid));
   };
 
-  const generateOutputFile = (path: string) => {
+  const generateOutputFile = async (path: string) => {
     const name = basename(path).split(".")[0];
 
-    ipcRenderer.send(
+    const err = await ipc.callMain(
       "save-file",
-      path,
-      generateXBM(name, grid)
-    );
+      [ path, generateXBM(name, grid) ]
+    ) as NodeJS.ErrnoException | undefined;
+
+    if (err) {
+      alert("Could not export file: " + err.message);
+      return;
+    }
+
+    alert("File exported successfully!");
   };
 
   return (

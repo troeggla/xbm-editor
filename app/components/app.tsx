@@ -42,16 +42,14 @@ function initGrid(dimensions: [number, number], initialData: boolean[][] = []): 
 }
 
 const App: React.FC = () => {
-  const [dimensions, setDimensions] = useState<[number, number]>([32, 32]);
-  const [grid, setGrid] = useState<boolean[][]>(initGrid(dimensions));
+  const [grid, setGrid] = useState<boolean[][]>(initGrid([32, 32]));
   const [cellSize, setCellSize] = useState<number>(20);
 
   useEffect(() => {
   }, []);
 
   const updateDimensions = (dimensions: [number, number]) => {
-    setDimensions(dimensions);
-    setGrid(initGrid(dimensions, grid));
+    setGrid(initGrid(dimensions, grid.slice()));
   };
 
   const generateOutputFile = async (path: string) => {
@@ -74,11 +72,11 @@ const App: React.FC = () => {
     <div id="app">
       <Controls
         cellSize={cellSize}
-        dimensions={dimensions}
+        dimensions={getGridDimensions(grid)}
         onCellSizeUpdated={setCellSize}
         onDimensionsUpdated={updateDimensions}
         onGenerateClicked={generateOutputFile}
-        onClearClicked={() => setGrid(initGrid(dimensions))}
+        onClearClicked={() => setGrid(initGrid(getGridDimensions(grid)))}
       />
       <Canvas
         grid={grid}

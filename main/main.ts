@@ -11,7 +11,7 @@ import { setupHandlers } from "./ipc_handlers";
 let mainWindow: BrowserWindow | null;
 
 function launchMenuAction(itemId: string) {
-  ipc.callRenderer(mainWindow!, "menu-item-clicked", itemId);
+  ipc.callFocusedRenderer("menu-item-clicked", itemId);
 }
 
 function createWindow() {

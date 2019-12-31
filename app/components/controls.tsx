@@ -24,11 +24,10 @@ interface ControlsProps {
   onCellSizeUpdated: (cellSize: number) => void;
   onDimensionsUpdated: (dimensions: [number, number]) => void;
   onGenerateClicked: (filename: string) => void;
-  onClearClicked: () => void;
 }
 
 const Controls: React.FC<ControlsProps> = (props) => {
-  const { cellSize, dimensions, onCellSizeUpdated, onDimensionsUpdated, onGenerateClicked, onClearClicked } = props;
+  const { cellSize, dimensions, onCellSizeUpdated, onDimensionsUpdated, onGenerateClicked } = props;
 
   const selectFilename = async () => {
     const filename = await getFilename();
@@ -71,9 +70,6 @@ const Controls: React.FC<ControlsProps> = (props) => {
       </div>
 
       <div>
-        <button className="button is-small"  style={{ marginRight: 10 }} onClick={onClearClicked}>
-          Clear
-        </button>
         <button className="button is-small" onClick={selectFilename}>
           Export
         </button>

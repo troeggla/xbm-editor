@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { basename } from "path";
 import { ipcRenderer as ipc } from "electron-better-ipc";
 
@@ -45,9 +45,16 @@ const App: React.FC = () => {
   const [grid, setGrid] = useState<boolean[][]>(initGrid([32, 32]));
   const [cellSize, setCellSize] = useState<number>(20);
 
+  const gridRef = useRef(grid);
+
+  useEffect(() => {
+    gridRef.current = grid;
+  }, [grid]);
+
   useEffect(() => {
     const unregister = ipc.answerMain("menu-item-clicked", (itemId: string) => {
       console.log("Menu item clicked:", itemId);
+      const grid = gridRef.current;
 
       switch (itemId) {
         case "invert":

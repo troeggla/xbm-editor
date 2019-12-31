@@ -46,6 +46,20 @@ const App: React.FC = () => {
   const [cellSize, setCellSize] = useState<number>(20);
 
   useEffect(() => {
+    const unregister = ipc.answerMain("menu-item-clicked", (itemId: string) => {
+      console.log("Menu item clicked:", itemId);
+
+      switch (itemId) {
+        case "invert":
+          setGrid(grid.map((col) => {
+            return col.map((pixel) => !pixel);
+          }));
+      }
+    });
+
+    return () => {
+      unregister();
+    };
   }, []);
 
   const updateDimensions = (dimensions: [number, number]) => {

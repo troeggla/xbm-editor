@@ -8,6 +8,13 @@ import { generateXBM } from "../generate_xbm";
 import Canvas from "./canvas";
 import Controls from "./controls";
 
+function getGridDimensions<T>(grid: T[][]): [number, number] {
+  return [
+    grid.length,
+    (grid.length === 0) ? 0 : grid[0].length
+  ];
+}
+
 function initGrid(dimensions: [number, number], initialData: boolean[][] = []): boolean[][] {
   const [width, height] = dimensions;
   const matrix: boolean[][] = [];

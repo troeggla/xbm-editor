@@ -58,9 +58,11 @@ const App: React.FC = () => {
 
       switch (itemId) {
         case "invert":
-          setGrid(grid.map((col) => {
+          return setGrid(grid.map((col) => {
             return col.map((pixel) => !pixel);
           }));
+        case "clear":
+          return setGrid(initGrid(getGridDimensions(grid)));
       }
     });
 

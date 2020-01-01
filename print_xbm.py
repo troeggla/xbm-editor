@@ -52,7 +52,7 @@ def draw_image(data, width, height):
         x = i % width
 
         if c == "1":
-            plt.scatter(x, y, c="#118477")
+            plt.scatter(x, y, c="#118477", marker="s")
 
         if (i + 1) % width == 0:
             y -= 1

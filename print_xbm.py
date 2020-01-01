@@ -21,6 +21,14 @@ def get_width(xbm):
     else:
         return math.ceil(width / 8) * 8
 
+
+def get_height(xbm):
+    regex = re.compile(".*_height ([0-9]+).*", re.DOTALL)
+    match = regex.match(xbm)
+
+    return int(match.group(1))
+
+
 def get_data(xbm):
     regex = re.compile(".*\{(.+)\}.*", re.DOTALL)
     match = regex.match(xbm)

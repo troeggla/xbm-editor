@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import math
+import matplotlib.pyplot as plt
 import re
 import sys
 
@@ -41,15 +42,22 @@ def to_bin(n):
     return "".join(reversed(("0" * (8 - len(num)) + num)))
 
 
-def print_xbm(data, width):
+def draw_image(data, width, height):
     bits = [to_bin(int(n, 16)) for n in data.split(",") if n != ""]
     bitstr = "".join(bits)
 
+    y = height
+
     for i, c in enumerate(bitstr):
-        print("#" if c == "1" else " ", end="")
+        x = i % width
+
+        if c == "1":
+            plt.scatter(x, y, c="#118477")
 
         if (i + 1) % width == 0:
-            print()
+            y -= 1
+
+    plt.show()
 
 
 def main(path):
@@ -58,7 +66,7 @@ def main(path):
     width = get_width(xbm)
     data = get_data(xbm)
 
-    print_xbm(data, width)
+    draw_image(data, width, get_height(xbm))
 
 
 if __name__ == "__main__":

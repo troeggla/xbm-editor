@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import print_function, division
 
 import math
 import matplotlib.pyplot as plt
@@ -43,19 +43,17 @@ def to_bin(n):
 
 
 def draw_image(data, width, height):
-    bits = [to_bin(int(n, 16)) for n in data.split(",") if n != ""]
-    bitstr = "".join(bits)
-
-    y = height
+    bitstr = "".join(
+        to_bin(int(n, 16)) for n in data.split(",")
+        if n != ""
+    )
 
     for i, c in enumerate(bitstr):
+        y = height - (i // width)
         x = i % width
 
         if c == "1":
             plt.scatter(x, y, c="#118477", marker="s")
-
-        if (i + 1) % width == 0:
-            y -= 1
 
     plt.show()
 

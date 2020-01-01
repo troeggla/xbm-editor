@@ -11,7 +11,7 @@ def read_file(path):
 
 
 def get_width(xbm):
-    regex = re.compile(".*_width ([0-9]+).*", re.DOTALL)
+    regex = re.compile(r".*_width ([0-9]+).*", re.DOTALL)
     match = regex.match(xbm)
 
     width = int(match.group(1))
@@ -23,14 +23,14 @@ def get_width(xbm):
 
 
 def get_height(xbm):
-    regex = re.compile(".*_height ([0-9]+).*", re.DOTALL)
+    regex = re.compile(r".*_height ([0-9]+).*", re.DOTALL)
     match = regex.match(xbm)
 
     return int(match.group(1))
 
 
 def get_data(xbm):
-    regex = re.compile(".*\{(.+)\}.*", re.DOTALL)
+    regex = re.compile(r".*\{(.+)\}.*", re.DOTALL)
     match = regex.match(xbm)
 
     return match.group(1).strip()

@@ -16,12 +16,7 @@ def get_width(xbm):
     regex = re.compile(r".*_width ([0-9]+).*", re.DOTALL)
     match = regex.match(xbm)
 
-    width = int(match.group(1))
-
-    if width % 8 == 0:
-        return width
-    else:
-        return math.ceil(width / 8) * 8
+    return int(match.group(1))
 
 
 def get_height(xbm):
@@ -47,20 +42,24 @@ def draw_image(data, width, height, scale=10):
     img = Image.new("RGB", (width * scale, height * scale))
     draw = ImageDraw.Draw(img)
 
+    file_width = math.ceil(width / 8) * 8
     bitstr = "".join(
         to_bin(int(n, 16)) for n in data.split(",")
         if n != ""
     )
 
     for i, c in enumerate(bitstr):
-        y = (i // width) * scale
-        x = (i % width) * scale
+        y = (i // file_width)
+        x = (i % file_width)
+
+        if x > width:
+            continue
 
         fill_color = "#118477" if c == "1" else "#FFFFFF"
 
         draw.rectangle([
-            (x, y),
-            (x + scale, y + scale)
+            (x * scale, y * scale),
+            (x * scale + scale, y * scale + scale)
         ], fill=fill_color, outline="#E2E2E2")
 
     img.show()

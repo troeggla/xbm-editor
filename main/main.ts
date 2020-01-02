@@ -38,6 +38,20 @@ function createWindow() {
   // mainWindow.webContents.openDevTools()
 
   let menuTemplate: Array<MenuItemConstructorOptions> = [{
+    label: "File",
+    submenu: [
+      { click: launchMenuAction.bind(null, "open"), label: "Open", accelerator: "CmdOrCtrl+O" },
+      { click: launchMenuAction.bind(null, "save"), label: "Save", accelerator: "CmdOrCtrl+S" },
+      { type: "separator" },
+      { click: launchMenuAction.bind(null, "export"), label: "Export" }
+    ]
+  }, {
+    label: "Edit",
+    submenu: [
+      { click: launchMenuAction.bind(null, "invert"), label: "Invert", accelerator: "CmdOrCtrl+I" },
+      { click: launchMenuAction.bind(null, "clear"), label: "Clear", accelerator: "CmdOrCtrl+R" }
+    ]
+  }, {
     label: "View",
     submenu: [
       { role: "reload" },
@@ -50,12 +64,6 @@ function createWindow() {
       { type: "separator" },
       { role: "togglefullscreen" }
     ] as Array<MenuItemConstructorOptions>
-  }, {
-    label: "Edit",
-    submenu: [
-      { click: launchMenuAction.bind(null, "invert"), label: "Invert", accelerator: "CmdOrCtrl+I" },
-      { click: launchMenuAction.bind(null, "clear"), label: "Clear", accelerator: "CmdOrCtrl+R" }
-    ]
   }];
 
   if (process.platform === "darwin") {

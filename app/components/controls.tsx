@@ -40,7 +40,7 @@ const Controls: React.FC<ControlsProps> = (props) => {
   return (
     <div className="controls">
       <div>
-        <label className="input-label">Cell size:</label>
+        <label className="input-label">Zoom:</label>
         <input
           type="number"
           className="input is-small number-input"

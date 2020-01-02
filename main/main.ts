@@ -66,16 +66,16 @@ function createWindow() {
     menuTemplate.unshift({
       label: app.getName(),
       submenu: [
-        {role: "about"},
-        {type: "separator"},
-        {role: "services", },
-        {type: "separator"},
-        {role: "hide"},
-        {role: "hideothers"},
-        {role: "unhide"},
-        {type: "separator"},
-        {role: "quit"}
-      ] as Array<MenuItemConstructorOptions>
+        { role: "about" },
+        { type: "separator" },
+        { role: "services" },
+        { type: "separator" },
+        { role: "hide" },
+        { role: "hideOthers" },
+        { role: "unhide" },
+        { type: "separator" },
+        { role: "quit" }
+      ]
     });
   }
 

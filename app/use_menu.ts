@@ -22,6 +22,8 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
           }));
         case "clear":
           return setGrid(initGrid(getGridDimensions(grid)));
+        default:
+          return grid;
       }
     });
 

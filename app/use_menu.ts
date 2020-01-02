@@ -43,6 +43,33 @@ const exportGrid: GridTransformation = (grid) => {
   return grid;
 };
 
+const saveGrid: GridTransformation = (grid) => {
+  (async () => {
+    const path = await showSaveDialog(homedir() + "/image.xbme");
+    if (!path) {
+      return;
+    }
+
+    const compactGrid = grid.map((col) => {
+      return col.map((x) => (x) ? 1 : 0)
+    });
+
+    const err = await ipc.callMain(
+      "save-file",
+      [ path, JSON.stringify(compactGrid) ]
+    ) as NodeJS.ErrnoException | undefined;
+
+    if (err) {
+      alert("Could not save file: " + err.message);
+      return;
+    }
+
+    alert("File saved successfully!");
+  })();
+
+  return grid;
+};
+
 function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
   const gridRef = useRef<boolean[][]>(grid);
 
@@ -62,6 +89,8 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
           return setGrid(clearGrid(grid));
         case "export":
           return setGrid(exportGrid(grid));
+        case "save":
+          return setGrid(saveGrid(grid));
         default:
           return grid;
       }

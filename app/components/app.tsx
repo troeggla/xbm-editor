@@ -1,10 +1,11 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { basename } from "path";
 import { ipcRenderer as ipc } from "electron-better-ipc";
 
 import { generateXBM } from "../generate_xbm";
 import { initGrid, getGridDimensions } from "../util";
+import useMenu from "../use_menu";
 
 import Canvas from "./canvas";
 import Controls from "./controls";
@@ -13,24 +14,7 @@ const App: React.FC = () => {
   const [grid, setGrid] = useState<boolean[][]>(initGrid([32, 32]));
   const [cellSize, setCellSize] = useState<number>(20);
 
-  useEffect(() => {
-    const unregister = ipc.answerMain("menu-item-clicked", (itemId: string) => {
-      console.log("Menu item clicked:", itemId);
-
-      switch (itemId) {
-        case "invert":
-          return setGrid((grid) => grid.map((col) => {
-            return col.map((pixel) => !pixel);
-          }));
-        case "clear":
-          return setGrid((grid) => initGrid(getGridDimensions(grid)));
-      }
-    });
-
-    return () => {
-      unregister();
-    };
-  }, []);
+  useMenu(grid, setGrid);
 
   const updateDimensions = (dimensions: [number, number]) => {
     setGrid(initGrid(dimensions, grid.slice()));

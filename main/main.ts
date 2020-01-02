@@ -55,15 +55,11 @@ function createWindow() {
     label: "View",
     submenu: [
       { role: "reload" },
-      { role: "forcereload" },
-      { role: "toggledevtools" },
-      { type: "separator" },
-      { role: "resetzoom" },
-      { role: "zoomin" },
-      { role: "zoomout" },
+      { role: "forceReload" },
+      { role: "toggleDevTools" },
       { type: "separator" },
       { role: "togglefullscreen" }
-    ] as Array<MenuItemConstructorOptions>
+    ]
   }];
 
   if (process.platform === "darwin") {

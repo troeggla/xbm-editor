@@ -54,3 +54,9 @@ html, body {
   line-height: 2;
   margin-right: 5px;
 }
+
+.range {
+  line-height: 2;
+  height: 10px;
+  margin-left: 10px;
+}

@@ -42,10 +42,11 @@ const Controls: React.FC<ControlsProps> = (props) => {
       <div>
         <label className="input-label">Zoom:</label>
         <input
-          type="number"
-          className="input is-small number-input"
+          type="range"
+          className="range"
           value={cellSize}
           min={1}
+          max={100}
           onChange={(e) => onCellSizeUpdated(e.target.valueAsNumber)}
         />
       </div>

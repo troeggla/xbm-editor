@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
-import { remote, SaveDialogOptions } from "electron";
 import { ipcRenderer as ipc } from "electron-better-ipc";
 import { basename } from "path";
 import { homedir } from "os";
 
-import { initGrid, getGridDimensions } from "./util";
+import { initGrid, getGridDimensions, showSaveDialog } from "./util";
 import { generateXBM } from "./generate_xbm";
 
 type GridTransformation = (grid: boolean[][]) => boolean[][];
@@ -21,25 +20,13 @@ const clearGrid: GridTransformation = (grid) => {
 
 const exportGrid: GridTransformation = (grid) => {
   (async () => {
-    const dialogOptions: SaveDialogOptions = {
-      title: "Save data as",
-      defaultPath: homedir() + "/image.xbm",
-      buttonLabel: "Choose"
-    };
-
-    const result = await remote.dialog.showSaveDialog(
-      remote.getCurrentWindow(),
-      dialogOptions
-    );
-
-    const path = result.filePath;
+    const path = await showSaveDialog(homedir() + "/image.xbm");
 
     if (!path) {
       return;
     }
 
     const name = basename(path).split(".")[0];
-
     const err = await ipc.callMain(
       "save-file",
       [ path, generateXBM(name, grid) ]

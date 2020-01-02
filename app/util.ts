@@ -1,3 +1,5 @@
+import { remote, SaveDialogOptions } from "electron";
+
 export function getGridDimensions<T>(grid: T[][]): [number, number] {
   return [
     grid.length,
@@ -29,4 +31,19 @@ export function initGrid(dimensions: [number, number], initialData: boolean[][] 
   }
 
   return matrix;
+}
+
+export async function showSaveDialog(defaultPath: string) {
+  const dialogOptions: SaveDialogOptions = {
+    title: "Save as",
+    defaultPath,
+    buttonLabel: "Choose"
+  };
+
+  const result = await remote.dialog.showSaveDialog(
+    remote.getCurrentWindow(),
+    dialogOptions
+  );
+
+  return result.filePath;
 }

@@ -68,10 +68,11 @@ def draw_image(data, width, height, scale=10):
 def main(path):
     xbm = read_file(path)
 
-    width = get_width(xbm)
-    data = get_data(xbm)
-
-    draw_image(data, width, get_height(xbm))
+    draw_image(
+        get_data(xbm),
+        get_width(xbm),
+        get_height(xbm)
+    )
 
 
 if __name__ == "__main__":

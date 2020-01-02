@@ -1,9 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { basename } from "path";
-import { ipcRenderer as ipc } from "electron-better-ipc";
 
-import { generateXBM } from "../generate_xbm";
 import { initGrid, getGridDimensions } from "../util";
 import useMenu from "../use_menu";
 
@@ -20,22 +17,6 @@ const App: React.FC = () => {
     setGrid(initGrid(dimensions, grid.slice()));
   };
 
-  const generateOutputFile = async (path: string) => {
-    const name = basename(path).split(".")[0];
-
-    const err = await ipc.callMain(
-      "save-file",
-      [ path, generateXBM(name, grid) ]
-    ) as NodeJS.ErrnoException | undefined;
-
-    if (err) {
-      alert("Could not export file: " + err.message);
-      return;
-    }
-
-    alert("File exported successfully!");
-  };
-
   return (
     <div id="app">
       <Controls
@@ -43,7 +24,6 @@ const App: React.FC = () => {
         dimensions={getGridDimensions(grid)}
         onCellSizeUpdated={setCellSize}
         onDimensionsUpdated={updateDimensions}
-        onGenerateClicked={generateOutputFile}
       />
       <Canvas
         grid={grid}

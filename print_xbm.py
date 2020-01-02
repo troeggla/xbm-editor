@@ -1,9 +1,10 @@
 from __future__ import print_function, division
 
 import math
-import matplotlib.pyplot as plt
 import re
 import sys
+
+from PIL import Image, ImageDraw
 
 
 def read_file(path):
@@ -42,20 +43,27 @@ def to_bin(n):
     return "".join(reversed(("0" * (8 - len(num)) + num)))
 
 
-def draw_image(data, width, height):
+def draw_image(data, width, height, scale=10):
+    img = Image.new("RGB", (width * scale, height * scale))
+    draw = ImageDraw.Draw(img)
+
     bitstr = "".join(
         to_bin(int(n, 16)) for n in data.split(",")
         if n != ""
     )
 
     for i, c in enumerate(bitstr):
-        y = height - (i // width)
-        x = i % width
+        y = (i // width) * scale
+        x = (i % width) * scale
 
-        if c == "1":
-            plt.scatter(x, y, c="#118477", marker="s")
+        fill_color = "#118477" if c == "1" else "#FFFFFF"
 
-    plt.show()
+        draw.rectangle([
+            (x, y),
+            (x + scale, y + scale)
+        ], fill=fill_color, outline="#E2E2E2")
+
+    img.show()
 
 
 def main(path):

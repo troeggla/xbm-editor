@@ -3,7 +3,7 @@ import { ipcRenderer as ipc } from "electron-better-ipc";
 import { basename } from "path";
 import { homedir } from "os";
 
-import { initGrid, getGridDimensions, showSaveDialog } from "./util";
+import { initGrid, getGridDimensions, showSaveDialog, showOpenDialog } from "./util";
 import { generateXBM } from "./generate_xbm";
 
 type GridTransformation = (grid: boolean[][]) => boolean[][] | Promise<boolean[][]>;
@@ -67,6 +67,25 @@ const saveGrid: GridTransformation = async (grid) => {
   return grid;
 };
 
+const loadGrid: GridTransformation = async (grid) => {
+  const path = await showOpenDialog(homedir());
+
+  if (!path) {
+    return grid;
+  }
+
+  const [err, content] = await ipc.callMain(
+    "open-file", path
+  ) as [NodeJS.ErrnoException, string];
+
+  if (err) {
+    alert("Could not open file at " + path);
+    return grid;
+  }
+
+  return JSON.parse(content) as boolean[][];
+};
+
 function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
   const gridRef = useRef<boolean[][]>(grid);
 
@@ -91,6 +110,9 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
           break;
         case "save":
           setGrid(await saveGrid(grid));
+          break;
+        case "open":
+          setGrid(await loadGrid(grid));
           break;
       }
     });

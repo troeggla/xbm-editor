@@ -6,7 +6,7 @@ import { homedir } from "os";
 import { initGrid, getGridDimensions, showSaveDialog } from "./util";
 import { generateXBM } from "./generate_xbm";
 
-type GridTransformation = (grid: boolean[][]) => boolean[][];
+type GridTransformation = (grid: boolean[][]) => boolean[][] | Promise<boolean[][]>;
 
 const invertGrid: GridTransformation = (grid) => {
   return grid.map((col) => {
@@ -43,30 +43,27 @@ const exportGrid: GridTransformation = (grid) => {
   return grid;
 };
 
-const saveGrid: GridTransformation = (grid) => {
-  (async () => {
-    const path = await showSaveDialog(homedir() + "/image.xbme");
-    if (!path) {
-      return;
-    }
+const saveGrid: GridTransformation = async (grid) => {
+  const path = await showSaveDialog(homedir() + "/image.xbme");
+  if (!path) {
+    return grid;
+  }
 
-    const compactGrid = grid.map((col) => {
-      return col.map((x) => (x) ? 1 : 0)
-    });
+  const compactGrid = grid.map((col) => {
+    return col.map((x) => (x) ? 1 : 0)
+  });
 
-    const err = await ipc.callMain(
-      "save-file",
-      [ path, JSON.stringify(compactGrid) ]
-    ) as NodeJS.ErrnoException | undefined;
+  const err = await ipc.callMain(
+    "save-file",
+    [ path, JSON.stringify(compactGrid) ]
+  ) as NodeJS.ErrnoException | undefined;
 
-    if (err) {
-      alert("Could not save file: " + err.message);
-      return;
-    }
+  if (err) {
+    alert("Could not save file: " + err.message);
+    return grid;
+  }
 
-    alert("File saved successfully!");
-  })();
-
+  alert("File saved successfully!");
   return grid;
 };
 
@@ -78,21 +75,23 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
   }, [grid]);
 
   useEffect(() => {
-    const unregister = ipc.answerMain("menu-item-clicked", (itemId: string) => {
+    const unregister = ipc.answerMain("menu-item-clicked", async (itemId: string) => {
       console.log("Menu item clicked:", itemId);
       const grid = gridRef.current;
 
       switch (itemId) {
         case "invert":
-          return setGrid(invertGrid(grid));
+          setGrid(await invertGrid(grid));
+          break;
         case "clear":
-          return setGrid(clearGrid(grid));
+          setGrid(await clearGrid(grid));
+          break;
         case "export":
-          return setGrid(exportGrid(grid));
+          setGrid(await exportGrid(grid));
+          break;
         case "save":
-          return setGrid(saveGrid(grid));
-        default:
-          return grid;
+          setGrid(await saveGrid(grid));
+          break;
       }
     });
 

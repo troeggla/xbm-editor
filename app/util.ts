@@ -1,4 +1,4 @@
-import { remote, SaveDialogOptions } from "electron";
+import { remote, OpenDialogOptions, SaveDialogOptions } from "electron";
 
 export function getGridDimensions<T>(grid: T[][]): [number, number] {
   return [
@@ -46,4 +46,21 @@ export async function showSaveDialog(defaultPath: string) {
   );
 
   return result.filePath;
+}
+
+export async function showOpenDialog(defaultPath: string): Promise<string | undefined> {
+  const dialogOptions: OpenDialogOptions = {
+    title: "Open",
+    filters: [
+      { name: "XBM Editor files", extensions: [ "xbme" ] }
+    ],
+    defaultPath,
+  };
+
+  const result = await remote.dialog.showOpenDialog(
+    remote.getCurrentWindow(),
+    dialogOptions
+  );
+
+  return result.filePaths![0];
 }

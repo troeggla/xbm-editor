@@ -50,7 +50,7 @@ const saveGrid: GridTransformation = async (grid) => {
   }
 
   const compactGrid = grid.map((col) => {
-    return col.map((x) => (x) ? 1 : 0)
+    return col.map((x) => (x) ? 1 : 0);
   });
 
   const err = await ipc.callMain(

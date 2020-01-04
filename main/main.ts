@@ -49,7 +49,7 @@ function createWindow() {
     label: "Edit",
     submenu: [
       { click: launchMenuAction.bind(null, "invert"), label: "Invert", accelerator: "CmdOrCtrl+I" },
-      { click: launchMenuAction.bind(null, "clear"), label: "Clear", accelerator: "CmdOrCtrl+R" }
+      { click: launchMenuAction.bind(null, "clear"), label: "Clear" }
     ]
   }, {
     label: "View",

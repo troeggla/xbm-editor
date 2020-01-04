@@ -19,21 +19,28 @@ function getPathPoints(linePoints: Array<Point>): Array<Point> {
     const [ x1, y1 ] = linePoints[i];
     const [ x2, y2 ] = linePoints[i + 1];
 
-    if (x2 === x1) {
-      pathPoints.push([x1, y1]);
-      pathPoints.push([x2, y2]);
+    if (x1 !== x2) {
+      const m = (y2 - y1) / (x2 - x1);
+      const b = y1 - (m * x1);
 
-      continue;
+      const [ leftX, rightX ] = [x1, x2].sort((a, b) => a - b);
+
+      for (let x = leftX; x <= rightX; x++) {
+        const y = m * x + b;
+        pathPoints.push([x, y]);
+      }
     }
 
-    const m = (y2 - y1) / (x2 - x1);
-    const b = y1 - (m * x1);
+    if (y1 !== y2) {
+      const m = (x2 - x1) / (y2 - y1);
+      const b = x1 - (m * y1);
 
-    const [ leftY, rightY ] = [y1, y2].sort((a, b) => a - b);
+      const [ leftY, rightY ] = [y1, y2].sort((a, b) => a - b);
 
-    for (let x = leftX; x <= rightX; x++) {
-      const y = m * x + b;
-      pathPoints.push([x, y]);
+      for (let y = leftY; y <= rightY; y++) {
+        const x = m * y + b;
+        pathPoints.push([x, y]);
+      }
     }
   }
 

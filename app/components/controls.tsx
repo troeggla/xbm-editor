@@ -1,8 +1,5 @@
 import * as React from "react";
 
-async function getFilename() {
-}
-
 interface ControlsProps {
   cellSize: number;
   dimensions: [number, number];

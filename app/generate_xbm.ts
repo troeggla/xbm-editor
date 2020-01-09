@@ -64,3 +64,17 @@ export function generateXBM(name: string, grid: boolean[][]): string {
     `};\n`
   );
 }
+
+function getWidth(data: string) {
+  const regex = /.*_width ([0-9]+).*/;
+  const match = regex.exec(data);
+
+  return match?.[1];
+}
+
+function getHeight(data: string) {
+  const regex = /.*_height ([0-9]+).*/;
+  const match = regex.exec(data);
+
+  return match?.[1];
+}

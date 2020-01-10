@@ -1,3 +1,5 @@
+import { initGrid } from "./util";
+
 function flatten(grid: boolean[][]): Array<boolean> {
   const flattenedGrid: Array<boolean> = [];
   const remainder = grid.length % 8;
@@ -104,4 +106,35 @@ function getPixels(data: string) {
       return reverse(toPaddedBinary(parseInt(x, 16)));
     }).join("").split("");
   }
+}
+
+export function readXBM(data: string) {
+  const height = getHeight(data);
+  const width = getWidth(data);
+  const fileWidth = Math.ceil(width / 8) * 8;
+
+  const bitstr = getPixels(data);
+  let grid = initGrid([width, height]);
+
+  if (!bitstr) {
+    return undefined;
+  }
+
+  try {
+    for (let i = 0; i < bitstr.length; i++) {
+      let y = Math.floor(i / fileWidth);
+      let x = i % fileWidth;
+
+      if (x >= width) {
+        continue;
+      }
+
+      grid[x][y] = (bitstr[i] === "1") ? true : false;
+    }
+  } catch (e) {
+    console.error(e);
+    return undefined;
+  }
+
+  return grid;
 }

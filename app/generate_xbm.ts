@@ -69,12 +69,12 @@ function getWidth(data: string) {
   const regex = /.*_width ([0-9]+).*/;
   const match = regex.exec(data);
 
-  return match?.[1];
+  return parseInt(match?.[1] || "0", 10);
 }
 
 function getHeight(data: string) {
   const regex = /.*_height ([0-9]+).*/;
   const match = regex.exec(data);
 
-  return match?.[1];
+  return parseInt(match?.[1] || "0", 10);
 }

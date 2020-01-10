@@ -52,7 +52,7 @@ export async function showOpenDialog(defaultPath: string): Promise<string | unde
   const dialogOptions: OpenDialogOptions = {
     title: "Open",
     filters: [
-      { name: "XBM Editor files", extensions: [ "xbme" ] }
+      { name: "XBM Editor files, XBM files, Header files", extensions: [ "xbme", "xbm", "h" ] }
     ],
     defaultPath,
   };

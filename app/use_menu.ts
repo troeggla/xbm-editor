@@ -4,7 +4,7 @@ import { basename } from "path";
 import { homedir } from "os";
 
 import { initGrid, getGridDimensions, showSaveDialog, showOpenDialog } from "./util";
-import { generateXBM } from "./generate_xbm";
+import { generateXBM, readXBM } from "./generate_xbm";
 
 type GridTransformation = (grid: boolean[][]) => boolean[][] | Promise<boolean[][]>;
 
@@ -83,7 +83,11 @@ const loadGrid: GridTransformation = async (grid) => {
     return grid;
   }
 
-  return JSON.parse(content) as boolean[][];
+  if (path.endsWith("xbme")) {
+    return JSON.parse(content) as boolean[][];
+  } else {
+    return readXBM(content) || grid;
+  }
 };
 
 function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {

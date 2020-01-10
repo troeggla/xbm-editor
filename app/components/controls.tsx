@@ -15,7 +15,7 @@ const Controls: React.FC<ControlsProps> = (props) => {
     const value = e.target.valueAsNumber;
 
     if (!Number.isNaN(value) && value > 0) {
-      if (dimension == "x") {
+      if (dimension === "x") {
         onDimensionsUpdated([e.target.valueAsNumber, dimensions[1]]);
       } else {
         onDimensionsUpdated([dimensions[0], e.target.valueAsNumber]);

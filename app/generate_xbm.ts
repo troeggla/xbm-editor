@@ -78,3 +78,30 @@ function getHeight(data: string) {
 
   return parseInt(match?.[1] || "0", 10);
 }
+
+function toPaddedBinary(num: number) {
+  return num.toString(2).padStart(8, "0");
+}
+
+function reverse(str: string) {
+  return str.split("").reverse().join("");
+}
+
+function getPixels(data: string) {
+  const regex = /.*\{(.+)\}.*/s;
+  const match = regex.exec(data);
+
+  const bytes = match?.[1]?.trim();
+
+  if (!bytes) {
+    return undefined;
+  } else {
+    return bytes.split(",").map((x) => {
+      return x.trim();
+    }).filter((x) => {
+      return x.length === 4;
+    }).map((x) => {
+      return reverse(toPaddedBinary(parseInt(x, 16)));
+    }).join("").split("");
+  }
+}

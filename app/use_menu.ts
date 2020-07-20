@@ -103,21 +103,21 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
       const grid = gridRef.current;
 
       switch (itemId) {
-        case "invert":
-          setGrid(await invertGrid(grid));
-          break;
-        case "clear":
-          setGrid(await clearGrid(grid));
-          break;
-        case "export":
-          setGrid(await exportGrid(grid));
-          break;
-        case "save":
-          setGrid(await saveGrid(grid));
-          break;
-        case "open":
-          setGrid(await loadGrid(grid));
-          break;
+      case "invert":
+        setGrid(await invertGrid(grid));
+        break;
+      case "clear":
+        setGrid(await clearGrid(grid));
+        break;
+      case "export":
+        setGrid(await exportGrid(grid));
+        break;
+      case "save":
+        setGrid(await saveGrid(grid));
+        break;
+      case "open":
+        setGrid(await loadGrid(grid));
+        break;
       }
     });
 

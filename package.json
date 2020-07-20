@@ -10,6 +10,7 @@
   "scripts": {
     "start": "electron bundle/main.js",
     "pack": "electron-builder --dir",
+    "lint": "eslint --ext=ts,tsx,js,jsx .",
     "dist": "electron-builder && cd dist/mac && tar cvf XBMEditor.tar XBM\\ Editor.app/ && gzip XBMEditor.tar"
   },
   "build": {
@@ -25,10 +26,14 @@
     "@types/classnames": "^2.2.9",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.0.0",
     "classnames": "^2.2.6",
     "css-loader": "^2.1.1",
     "electron": "^9.1.0",
     "electron-builder": "^21.2.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.18.3",
     "style-loader": "^1.0.0",
     "ts-loader": "^6.0.4",
     "typescript": "^3.7.0",

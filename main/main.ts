@@ -1,5 +1,4 @@
-import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from "electron";
-import { ipcMain as ipc } from "electron-better-ipc";
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions, webContents } from "electron";
 
 import * as path from "path";
 import * as url from "url";
@@ -11,7 +10,12 @@ import { setupHandlers } from "./ipc_handlers";
 let mainWindow: BrowserWindow | null;
 
 function launchMenuAction(itemId: string) {
-  ipc.callFocusedRenderer("menu-item-clicked", itemId);
+  const renderer = webContents.getFocusedWebContents();
+
+  if (renderer) {
+    console.log("Calling renderer with item", itemId);
+    renderer.send("menu-item-clicked", itemId);
+  }
 }
 
 function createWindow() {

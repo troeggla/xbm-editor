@@ -96,7 +96,7 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
   }, [grid]);
 
   useEffect(() => {
-    const unregister = ipc.answerMain("menu-item-clicked", async (itemId: string) => {
+    ipcRenderer.on("menu-item-clicked", async (_, itemId: string) => {
       console.log("Menu item clicked:", itemId);
       const grid = gridRef.current;
 
@@ -120,7 +120,7 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
     });
 
     return () => {
-      unregister();
+      ipcRenderer.removeAllListeners("menu-item-clicked");
     };
   }, []);
 

@@ -21,8 +21,8 @@ function createWindow() {
     height: 800,
     title: app.name,
     titleBarStyle: "hidden",
-    icon: __dirname + "/icon.icns",
     webPreferences: {
+      enableRemoteModule: true,
       nodeIntegration: true
     }
   });

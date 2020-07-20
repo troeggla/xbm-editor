@@ -1,4 +1,4 @@
-import { ipcMain as ipc } from "electron-better-ipc";
+import { ipcMain } from "electron";
 import { writeFile, readFile } from "fs";
 
 function writeFilePromise(path: string, content: string) {
@@ -26,7 +26,7 @@ function readFilePromise(path: string) {
 }
 
 export function setupHandlers() {
-  ipc.answerRenderer("save-file", async ([ path, content ]: Array<string>) => {
+  ipcMain.handle("save-file", async (_, path: string, content: string) => {
     console.log("path:", path);
 
     try {
@@ -36,7 +36,7 @@ export function setupHandlers() {
     }
   });
 
-  ipc.answerRenderer("open-file", async (path: string) => {
+  ipcMain.handle("open-file", async (_, path: string) => {
     try {
       return [null, await readFilePromise(path)];
     } catch (err) {

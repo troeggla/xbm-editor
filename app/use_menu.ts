@@ -1,5 +1,5 @@
+import { ipcRenderer } from "electron";
 import { useEffect, useRef } from "react";
-import { ipcRenderer as ipc } from "electron-better-ipc";
 import { basename } from "path";
 import { homedir } from "os";
 
@@ -27,9 +27,8 @@ const exportGrid: GridTransformation = (grid) => {
     }
 
     const name = basename(path).split(".")[0];
-    const err = await ipc.callMain(
-      "save-file",
-      [ path, generateXBM(name, grid) ]
+    const err = await ipcRenderer.invoke(
+      "save-file", path, generateXBM(name, grid)
     ) as NodeJS.ErrnoException | undefined;
 
     if (err) {
@@ -53,9 +52,8 @@ const saveGrid: GridTransformation = async (grid) => {
     return col.map((x) => (x) ? 1 : 0);
   });
 
-  const err = await ipc.callMain(
-    "save-file",
-    [ path, JSON.stringify(compactGrid) ]
+  const err = await ipcRenderer.invoke(
+    "save-file", path, JSON.stringify(compactGrid)
   ) as NodeJS.ErrnoException | undefined;
 
   if (err) {
@@ -74,7 +72,7 @@ const loadGrid: GridTransformation = async (grid) => {
     return grid;
   }
 
-  const [err, content] = await ipc.callMain(
+  const [err, content] = await ipcRenderer.invoke(
     "open-file", path
   ) as [NodeJS.ErrnoException, string];
 

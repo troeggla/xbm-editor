@@ -4786,6 +4786,11 @@ write@1.0.3:
   dependencies:
     mkdirp "^0.5.1"
 
+xbm@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/xbm/-/xbm-1.0.0.tgz#a56e66af0faaa84be9588e7e5e40fe789a9f4a1e"
+  integrity sha512-x5SrJwJB0k0hVsciotLnYbwjuG7huE0hTheHnSeTACwSzDJIXn/sP756YNzUpcYd04VXmKcjXF6XGSYpCDPDDA==
+
 xdg-basedir@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-4.0.0.tgz#4bc8d9984403696225ef83a1573cbbcb4e79db13"

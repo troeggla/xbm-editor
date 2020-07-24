@@ -4,7 +4,7 @@ import { basename } from "path";
 import { homedir } from "os";
 
 import { initGrid, getGridDimensions, showSaveDialog, showOpenDialog } from "./util";
-import { generateXBM, readXBM } from "./xbm_utils";
+import { generateXBM, readXBM } from "xbm";
 
 type GridTransformation = (grid: boolean[][]) => boolean[][] | Promise<boolean[][]>;
 

@@ -84,7 +84,12 @@ const loadGrid: GridTransformation = async (grid) => {
   if (path.endsWith("xbme")) {
     return JSON.parse(content) as boolean[][];
   } else {
-    return readXBM(content) || grid;
+    try {
+      return readXBM(content);
+    } catch (e) {
+      alert(e);
+      return grid;
+    }
   }
 };
 

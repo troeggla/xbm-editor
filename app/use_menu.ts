@@ -28,7 +28,7 @@ const exportGrid: GridTransformation = (grid) => {
 
     const name = basename(path).split(".")[0];
     const err = await ipcRenderer.invoke(
-      "save-file", path, generateXBM(name, grid)
+      "save-file", path, generateXBM(name, grid, true)
     ) as NodeJS.ErrnoException | undefined;
 
     if (err) {

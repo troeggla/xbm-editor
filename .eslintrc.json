@@ -1,4 +1,4 @@
-module.exports = {
+{
   "env": {
     "browser": true,
     "es6": true
@@ -55,4 +55,4 @@ module.exports = {
     "no-unused-vars": "off",
     "react/prop-types": "off"
   }
-};
+}

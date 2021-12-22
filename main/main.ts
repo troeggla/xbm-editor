@@ -41,7 +41,7 @@ function createWindow() {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
-  let menuTemplate: Array<MenuItemConstructorOptions> = [{
+  const menuTemplate: Array<MenuItemConstructorOptions> = [{
     label: "File",
     submenu: [
       { click: launchMenuAction.bind(null, "open"), label: "Open", accelerator: "CmdOrCtrl+O" },

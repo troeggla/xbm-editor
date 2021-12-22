@@ -18,16 +18,18 @@ const clearGrid: GridTransformation = (grid) => {
 
 const exportGrid: GridTransformation = (grid) => {
   (async () => {
-    const err = await ipcRenderer.invoke(
-      "save-file", generateXBM("image", grid, true)
-    ) as NodeJS.ErrnoException | undefined;
+    const [err, status] = await ipcRenderer.invoke(
+      "save-file", "image.xbm", generateXBM("image", grid, true)
+    ) as [NodeJS.ErrnoException | null, "success" | "cancelled"];
 
     if (err) {
       alert("Could not export file: " + err.message);
       return;
     }
 
-    alert("File exported successfully!");
+    if (status == "success") {
+      alert("File exported successfully!");
+    }
   })();
 
   return grid;
@@ -38,26 +40,32 @@ const saveGrid: GridTransformation = async (grid) => {
     return col.map((x) => (x) ? 1 : 0);
   });
 
-  const err = await ipcRenderer.invoke(
-    "save-file", JSON.stringify(compactGrid)
-  ) as NodeJS.ErrnoException | undefined;
+  const [err, status] = await ipcRenderer.invoke(
+    "save-file", "image.xbme", JSON.stringify(compactGrid)
+  ) as [NodeJS.ErrnoException | null, "success" | "cancelled"];
 
   if (err) {
     alert("Could not save file: " + err.message);
-    return grid;
   }
 
-  alert("File saved successfully!");
+  if (status == "success") {
+    alert("File saved successfully!");
+  }
+
   return grid;
 };
 
 const loadGrid: GridTransformation = async (grid) => {
   const [err, content, path] = await ipcRenderer.invoke(
     "open-file"
-  ) as [NodeJS.ErrnoException, string, string];
+  ) as [NodeJS.ErrnoException | null, string, string];
 
   if (err) {
     alert("Could not open file");
+    return grid;
+  }
+
+  if (path == null) {
     return grid;
   }
 

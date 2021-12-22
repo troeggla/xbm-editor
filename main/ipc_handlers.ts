@@ -36,13 +36,14 @@ export function setupHandlers() {
     });
 
     if (result.canceled) {
-      return;
+      return [null, "cancelled"];
     }
 
     try {
       await writeFilePromise(result.filePath!, content);
+      return [null, "success"];
     } catch (err) {
-      return err;
+      return [err, null];
     }
   });
 
@@ -56,7 +57,7 @@ export function setupHandlers() {
     });
 
     if (result.canceled) {
-      return;
+      return [null, null];
     }
 
     const openPath = result.filePaths[0];

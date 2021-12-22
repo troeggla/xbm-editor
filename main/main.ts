@@ -26,7 +26,6 @@ function createWindow() {
     title: app.name,
     titleBarStyle: "hidden",
     webPreferences: {
-      enableRemoteModule: true,
       nodeIntegration: true
     }
   });

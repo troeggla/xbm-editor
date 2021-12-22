@@ -1,5 +1,6 @@
-import { ipcMain } from "electron";
+import { ipcMain, dialog } from "electron";
 import { writeFile, readFile } from "fs";
+import { homedir } from "os";
 
 function writeFilePromise(path: string, content: string): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -26,19 +27,41 @@ function readFilePromise(path: string): Promise<string> {
 }
 
 export function setupHandlers() {
-  ipcMain.handle("save-file", async (_, path: string, content: string) => {
-    console.log("path:", path);
+  ipcMain.handle("save-file", async (_, content: string) => {
+    const result = await dialog.showSaveDialog({
+      title: "Save as",
+      buttonLabel: "Choose",
+      defaultPath: homedir()
+    });
+
+    if (result.canceled) {
+      return;
+    }
 
     try {
-      await writeFilePromise(path, content);
+      await writeFilePromise(result.filePath!, content);
     } catch (err) {
       return err;
     }
   });
 
-  ipcMain.handle("open-file", async (_, path: string) => {
+  ipcMain.handle("open-file", async (_) => {
+    const result = await dialog.showOpenDialog({
+      title: "Open",
+      filters: [{
+        name: "XBM Editor files, XBM files, Header files",
+        extensions: ["xbme", "xbm", "h"]
+      }]
+    });
+
+    if (result.canceled) {
+      return;
+    }
+
+    const openPath = result.filePaths[0];
+
     try {
-      return [null, await readFilePromise(path)];
+      return [null, await readFilePromise(openPath), openPath];
     } catch (err) {
       return [err, null];
     }

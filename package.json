@@ -8,6 +8,7 @@
   "author": "Thomas Röggla",
   "license": "BSD-2-Clause",
   "scripts": {
+    "build": "webpack",
     "start": "electron bundle/main.js",
     "pack": "electron-builder --dir",
     "lint": "eslint --ext=ts,tsx,js,jsx .",

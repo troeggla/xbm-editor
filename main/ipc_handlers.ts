@@ -1,6 +1,7 @@
 import { ipcMain, dialog } from "electron";
 import { writeFile, readFile } from "fs";
 import { homedir } from "os";
+import { join } from "path";
 
 function writeFilePromise(path: string, content: string): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -27,11 +28,11 @@ function readFilePromise(path: string): Promise<string> {
 }
 
 export function setupHandlers() {
-  ipcMain.handle("save-file", async (_, content: string) => {
+  ipcMain.handle("save-file", async (_, filename: string, content: string) => {
     const result = await dialog.showSaveDialog({
       title: "Save as",
       buttonLabel: "Choose",
-      defaultPath: homedir()
+      defaultPath: join(homedir(), filename)
     });
 
     if (result.canceled) {

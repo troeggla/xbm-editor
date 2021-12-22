@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { writeFile, readFile } from "fs";
 
-function writeFilePromise(path: string, content: string) {
+function writeFilePromise(path: string, content: string): Promise<void> {
   return new Promise((resolve, reject) => {
     writeFile(path, content, (err) => {
       if (err) {
@@ -13,7 +13,7 @@ function writeFilePromise(path: string, content: string) {
   });
 }
 
-function readFilePromise(path: string) {
+function readFilePromise(path: string): Promise<string> {
   return new Promise((resolve, reject) => {
     readFile(path, (err, data) => {
       if (err) {

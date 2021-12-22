@@ -1,9 +1,7 @@
 import { ipcRenderer } from "electron";
 import { useEffect, useRef } from "react";
-import { basename } from "path";
-import { homedir } from "os";
 
-import { initGrid, getGridDimensions, showSaveDialog, showOpenDialog } from "./util";
+import { initGrid, getGridDimensions } from "./util";
 import { generateXBM, readXBM } from "xbm";
 
 type GridTransformation = (grid: boolean[][]) => boolean[][] | Promise<boolean[][]>;
@@ -20,15 +18,8 @@ const clearGrid: GridTransformation = (grid) => {
 
 const exportGrid: GridTransformation = (grid) => {
   (async () => {
-    const path = await showSaveDialog(homedir() + "/image.xbm");
-
-    if (!path) {
-      return;
-    }
-
-    const name = basename(path).split(".")[0];
     const err = await ipcRenderer.invoke(
-      "save-file", path, generateXBM(name, grid, true)
+      "save-file", generateXBM("image", grid, true)
     ) as NodeJS.ErrnoException | undefined;
 
     if (err) {
@@ -43,17 +34,12 @@ const exportGrid: GridTransformation = (grid) => {
 };
 
 const saveGrid: GridTransformation = async (grid) => {
-  const path = await showSaveDialog(homedir() + "/image.xbme");
-  if (!path) {
-    return grid;
-  }
-
   const compactGrid = grid.map((col) => {
     return col.map((x) => (x) ? 1 : 0);
   });
 
   const err = await ipcRenderer.invoke(
-    "save-file", path, JSON.stringify(compactGrid)
+    "save-file", JSON.stringify(compactGrid)
   ) as NodeJS.ErrnoException | undefined;
 
   if (err) {
@@ -66,18 +52,12 @@ const saveGrid: GridTransformation = async (grid) => {
 };
 
 const loadGrid: GridTransformation = async (grid) => {
-  const path = await showOpenDialog(homedir());
-
-  if (!path) {
-    return grid;
-  }
-
-  const [err, content] = await ipcRenderer.invoke(
-    "open-file", path
-  ) as [NodeJS.ErrnoException, string];
+  const [err, content, path] = await ipcRenderer.invoke(
+    "open-file"
+  ) as [NodeJS.ErrnoException, string, string];
 
   if (err) {
-    alert("Could not open file at " + path);
+    alert("Could not open file");
     return grid;
   }
 

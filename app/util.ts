@@ -1,5 +1,3 @@
-import { remote, OpenDialogOptions, SaveDialogOptions } from "electron";
-
 export function getGridDimensions<T>(grid: T[][]): [number, number] {
   return [
     grid.length,
@@ -31,36 +29,4 @@ export function initGrid(dimensions: [number, number], initialData: boolean[][] 
   }
 
   return matrix;
-}
-
-export async function showSaveDialog(defaultPath: string) {
-  const dialogOptions: SaveDialogOptions = {
-    title: "Save as",
-    defaultPath,
-    buttonLabel: "Choose"
-  };
-
-  const result = await remote.dialog.showSaveDialog(
-    remote.getCurrentWindow(),
-    dialogOptions
-  );
-
-  return result.filePath;
-}
-
-export async function showOpenDialog(defaultPath: string): Promise<string | undefined> {
-  const dialogOptions: OpenDialogOptions = {
-    title: "Open",
-    filters: [
-      { name: "XBM Editor files, XBM files, Header files", extensions: [ "xbme", "xbm", "h" ] }
-    ],
-    defaultPath,
-  };
-
-  const result = await remote.dialog.showOpenDialog(
-    remote.getCurrentWindow(),
-    dialogOptions
-  );
-
-  return result.filePaths![0];
 }

@@ -26,8 +26,7 @@ function createWindow() {
     title: app.name,
     titleBarStyle: "hidden",
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+      preload: path.join(__dirname, "preload.js")
     }
   });
 

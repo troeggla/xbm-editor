@@ -1,4 +1,3 @@
-import { ipcRenderer } from "electron";
 import { useEffect, useRef } from "react";
 
 import { initGrid, getGridDimensions } from "./util";
@@ -18,9 +17,10 @@ const clearGrid: GridTransformation = (grid) => {
 
 const exportGrid: GridTransformation = (grid) => {
   (async () => {
-    const [err, status] = await ipcRenderer.invoke(
-      "save-file", "image.xbm", generateXBM("image", grid, true)
-    ) as [NodeJS.ErrnoException | null, "success" | "cancelled"];
+    const [err, status] = await window.menuHandler.saveFile(
+      "image.xbm",
+      generateXBM("image", grid, true)
+    );
 
     if (err) {
       alert("Could not export file: " + err.message);
@@ -40,9 +40,10 @@ const saveGrid: GridTransformation = async (grid) => {
     return col.map((x) => (x) ? 1 : 0);
   });
 
-  const [err, status] = await ipcRenderer.invoke(
-    "save-file", "image.xbme", JSON.stringify(compactGrid)
-  ) as [NodeJS.ErrnoException | null, "success" | "cancelled"];
+  const [err, status] = await window.menuHandler.saveFile(
+    "image.xbme",
+    JSON.stringify(compactGrid)
+  );
 
   if (err) {
     alert("Could not save file: " + err.message);
@@ -56,9 +57,7 @@ const saveGrid: GridTransformation = async (grid) => {
 };
 
 const loadGrid: GridTransformation = async (grid) => {
-  const [err, content, path] = await ipcRenderer.invoke(
-    "open-file"
-  ) as [NodeJS.ErrnoException | null, string, string];
+  const [err, content, path] = await window.menuHandler.openFile();
 
   if (err) {
     alert("Could not open file");
@@ -89,7 +88,7 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
   }, [grid]);
 
   useEffect(() => {
-    ipcRenderer.on("menu-item-clicked", async (_, itemId: string) => {
+    window.menuHandler.onMenuItemClicked(async (itemId: string) => {
       console.log("Menu item clicked:", itemId);
       const grid = gridRef.current;
 
@@ -113,7 +112,7 @@ function useMenu(grid: boolean[][], setGrid: (grid: boolean[][]) => void) {
     });
 
     return () => {
-      ipcRenderer.removeAllListeners("menu-item-clicked");
+      window.menuHandler.clearMenuListeners();
     };
   }, []);
 

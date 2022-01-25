@@ -3540,10 +3540,10 @@ write-file-atomic@^3.0.0:
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
 
-xbm@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/xbm/-/xbm-1.2.2.tgz#8e9c36a59df358fd6d5017074abb344d026f1637"
-  integrity sha512-q+8sS/guQ3d5x/yelndYWt8xChQhHsH3PkSMN6Nw44NhByUUh84bZAC6omWDtOPBbypyJn579aInlW9Kp2MyuA==
+xbm@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/xbm/-/xbm-1.2.3.tgz#36cf60d48d23f1c601a0e2cf6e45191da2f7e8fc"
+  integrity sha512-y7zTLYNhIqchS+BvQiuiekxBv3u2MQBfpIJR3nOef2uPZA17Mc8sE4bguNobcrg5M6k0We3axzRdNs/KkJ1zVw==
 
 xdg-basedir@^4.0.0:
   version "4.0.0"
